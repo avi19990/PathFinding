@@ -12,6 +12,7 @@
 #include "Vector2.h"
 #include "PF_Visualizer.h"
 #include "PF_BFS_Visualizer.h"
+#include "PF_AStar_Visualizer.h"
 
 #define mapSize 10
 
@@ -20,7 +21,7 @@ int main()
     BoolMap* map = new BoolMap(mapSize, mapSize);
 
     PF_Algorithm* alg = new PF_AStar(map, Vector2(1, 1), Vector2(9, 9));
-    PF_Visualizer* visual = new PF_BFS_Visualizer(alg, sf::IntRect(10, 10, 880, 880),
+    PF_Visualizer* visual = new PF_AStar_Visualizer(alg, sf::IntRect(10, 10, 880, 880),
         { {"frontier", sf::Color(0, 0, 255)},
           {"cameFrom", sf::Color(0, 100, 0)},
           {"start", sf::Color(0, 255, 0)},
