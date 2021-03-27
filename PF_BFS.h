@@ -25,8 +25,9 @@ public:
 	bool solveStep();
 	std::vector<Vector2> solve();
 
-	Vector2 getCurrent() { return lastCheckedCurrent; };
 	std::vector<Vector2> getPath();
+
+	Vector2 getCurrent() { return lastCheckedCurrent; };
 	std::deque<Vector2>* getFrontier() { return &frontier; }
 	std::map<Vector2, Vector2, Vector2Comparator>* getCameFrom() { return &cameFrom; }
 };

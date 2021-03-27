@@ -59,12 +59,10 @@ std::vector<Vector2> PF_BFS::getPath()
 	if (isFinished)
 	{
 		std::vector<Vector2> path;
-		//path.push_back(finish);
 
 		Vector2 cell = finish;
 		while ((cell = cameFrom[cell]) != start)
 			path.push_back(cell);
-		//path.push_back(start);
 
 		std::reverse(path.begin(), path.end());
 
