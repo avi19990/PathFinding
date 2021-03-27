@@ -28,6 +28,12 @@ bool PF_BFS::solveStep()
 
 		lastCheckedCurrent = current;
 
+		if (current == finish)
+		{
+			isFinished = true;
+			return true;
+		}
+
 		for (Vector2 neighbour : map->findNeighbours(current))
 		{
 			if (std::find_if(cameFrom.begin(), cameFrom.end(), [neighbour](std::pair<Vector2, Vector2> _element) { return _element.first == neighbour; }) == cameFrom.end())
@@ -35,13 +41,9 @@ bool PF_BFS::solveStep()
 				frontier.push_back(neighbour);
 				cameFrom[neighbour] = current;
 			}
-
-			if (neighbour == finish)
-			{
-				isFinished = true;
-				return true;
-			}
 		}
+
+		return false;
 	}
 	else
 		return true;
