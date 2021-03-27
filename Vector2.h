@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math.h>
+
 class Vector2
 {
 public:
@@ -14,6 +16,16 @@ public:
 	{
 		x = _x;
 		y = _y;
+	}
+
+	static double distance(Vector2 _first, Vector2 _second)
+	{
+		return sqrt(abs(_first.x - _second.x) * abs(_first.x - _second.x) + abs(_first.y - _second.y) * abs(_first.y - _second.y));
+	}
+
+	static int manhattanDistance(Vector2 _first, Vector2 _second)
+	{
+		return abs(_first.x - _second.x) + abs(_first.y - _second.y);
 	}
 
 	bool operator==(const Vector2& _second) const
