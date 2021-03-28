@@ -2,7 +2,7 @@
 
 PF_AStar::PF_AStar()
 {
-	frontier.push_back(Vector2(0, 0));
+	frontier.insert(std::pair<float, Vector2>(0, Vector2(0, 0)));
 	cameFrom[Vector2(0, 0)] = Vector2(0, 0);
 	costSoFar[Vector2(0, 0)] = 0;
 	lastCheckedCurrent = Vector2(0, 0);
@@ -13,7 +13,7 @@ PF_AStar::PF_AStar()
 PF_AStar::PF_AStar(BoolMap* _map, Vector2 _start, Vector2 _finish)
 	: PF_Algorithm(_map, _start, _finish)
 {
-	frontier.push_back(_start);
+	frontier.insert(std::pair<float, Vector2>(0, _start));
 	cameFrom[_start] = _start;
 	costSoFar[_start] = 0;
 	lastCheckedCurrent = _start;
@@ -25,8 +25,8 @@ bool PF_AStar::solveStep()
 {
 	if (frontier.size() > 0 && !isFinished)
 	{
-		Vector2 current = frontier.front();
-		frontier.pop_front();
+		Vector2 current = frontier.begin()->second;
+		frontier.erase(frontier.begin());
 
 		lastCheckedCurrent = current;
 
@@ -40,19 +40,19 @@ bool PF_AStar::solveStep()
 		{
 			float newCost = costSoFar[current] + 1;
 
-			if (std::find_if(cameFrom.begin(), cameFrom.end(), [neighbour](std::pair<Vector2, Vector2> _element) { return _element.first == neighbour; }) == cameFrom.end() || newCost < costSoFar[neighbour])
+			if (newCost < costSoFar[neighbour] || std::find_if(cameFrom.begin(), cameFrom.end(), [neighbour](std::pair<Vector2, Vector2> _element) { return _element.first == neighbour; }) == cameFrom.end())
 			{
+				frontier.insert(std::pair<float, Vector2>(newCost + Vector2::distance(neighbour, finish), neighbour));
+
 				costSoFar[neighbour] = newCost;
-				frontier.push_back(neighbour);
-				std::sort(frontier.begin(), frontier.end(), [this](Vector2 _first, Vector2 _second) { return (Vector2::distance(_first, finish) + costSoFar[_first]) < (Vector2::distance(_second, finish) + costSoFar[_second]); });
 				cameFrom[neighbour] = current;
 			}
 		}
 
 		return false;
 	}
-	else
-		return true;
+	
+	return true;
 }
 
 std::vector<Vector2> PF_AStar::solve()

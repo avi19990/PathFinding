@@ -71,8 +71,8 @@ void PF_AStar_Visualizer::colorStartFinish()
 
 void PF_AStar_Visualizer::colorFrontier()
 {
-	for (Vector2 cell : *AStarAlgorithm->getFrontier())
-		colorSquare(mapMesh, map->width, cell, colorPalette["frontier"], true);
+	for (const std::pair<float, Vector2>& cell : *AStarAlgorithm->getFrontier())
+		colorSquare(mapMesh, map->width, cell.second, colorPalette["frontier"], true);
 }
 
 void PF_AStar_Visualizer::colorCameFrom()
@@ -83,9 +83,6 @@ void PF_AStar_Visualizer::colorCameFrom()
 
 void PF_AStar_Visualizer::colorPath()
 {
-	if (!AStarAlgorithm->getIsFinished())
-		return;
-
 	for (Vector2 cell : AStarAlgorithm->getPath())
 		colorSquare(mapMesh, map->width, cell, colorPalette["path"], true);
 }

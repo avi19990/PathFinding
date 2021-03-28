@@ -10,7 +10,7 @@
 class PF_AStar : public PF_Algorithm
 {
 private:
-	std::deque<Vector2> frontier;
+	std::multimap<float, Vector2> frontier;
 	std::map<Vector2, Vector2, Vector2Comparator> cameFrom;
 	std::map<Vector2, float, Vector2Comparator> costSoFar;
 
@@ -26,6 +26,7 @@ public:
 	std::vector<Vector2> getPath();
 
 	Vector2 getCurrent() { return lastCheckedCurrent; };
-	std::deque<Vector2>* getFrontier() { return &frontier; }
+	std::multimap<float, Vector2>* getFrontier() { return &frontier; }
 	std::map<Vector2, Vector2, Vector2Comparator>* getCameFrom() { return &cameFrom; }
+	std::map<Vector2, float, Vector2Comparator>* getCostSoFar() { return &costSoFar; }
  };
